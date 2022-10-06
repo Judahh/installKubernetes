@@ -1,0 +1,16 @@
+---
+podman_apt_repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }} /"
+podman_apt_pub_key: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_distribution_version }}/Release.key"
+
+podman_req_packages:
+- apt-transport-https
+- ca-certificates
+- curl
+- gnupg-agent
+- software-properties-common
+- libglib2.0-0
+
+podman_packages:
+- podman
+- buildah
+- skopeo

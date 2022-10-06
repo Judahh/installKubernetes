@@ -1,0 +1,32 @@
+---
+- name: Install Podman prerequisites
+  apt:
+    upgrade: yes
+    update_cache: yes
+    name: "{{ item }}"
+  loop: "{{ podman_req_package }}"
+
+- name: Add GPG key
+  apt_key:
+    url: "{{ podman_apt_pub_key }}"
+    state: present
+
+- name: Add podman repository
+  become: true
+  become_user: root
+  apt_repository:
+    repo: "{{ podman_apt_repo }}"
+    filename: podman
+  register: podman_apt_repo
+
+- name: Install Podman
+  apt:
+    name: "{{ item }}"
+  loop: "{{ podman_packages }}"
+
+- name: Upload default registries configuration
+  become: true
+  become_user: root
+  template:
+    src: registries.conf
+    dest: /etc/containers/registries.conf
